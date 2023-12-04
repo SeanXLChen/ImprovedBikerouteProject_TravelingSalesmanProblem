@@ -126,7 +126,7 @@ def data_init():
     # Park data init
     parkset_url = PARKDATA
     park_data =  parse_csv_data(download_csv_file(parkset_url))
-    park_index =  extract_index_str(park_data[0],"\ufeffGeom")
+    park_index =  extract_index_str(park_data[0],"Geom")
     parkname_index =  extract_index_str(park_data[0],"PARK_NAME")
 
     for row in park_data[1:]:
