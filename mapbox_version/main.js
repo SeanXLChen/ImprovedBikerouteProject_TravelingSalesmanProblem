@@ -33,3 +33,12 @@ window.addLocation = function(coordinates) {
     alert("You can select up to 5 locations.");
   }
 }
+
+// Create search bar
+// Add geocoder control to the map
+map.addControl(
+    new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl
+    })
+    );
