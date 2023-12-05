@@ -13,19 +13,6 @@ body { margin: 0; padding: 0; }
 </head>
 <body>
 <div id="map"></div>
-<script>
-	mapboxgl.accessToken = 'pk.eyJ1IjoiY2hlbnhpYW9sYWkiLCJhIjoiY2xwc3c3OG50MDZ4czJrb2doYWthMTBidSJ9.herOqFNc7n0DhqyKGvteaQ';
-    const map = new mapboxgl.Map({
-        container: 'map', // container ID
-        center: [-123.115540, 49.280747], // starting position [lng, lat]
-        zoom: 12 // starting zoom
-    });
-
-    // Create a default Marker and add it to the map.
-    const marker1 = new mapboxgl.Marker({color:'red'})
-        .setLngLat([-123.115540, 49.280747])
-        .addTo(map);
-</script>
-
+<script type="module" src="main.js"></script>
 </body>
 </html>
