@@ -26,19 +26,52 @@ map.on('click', function(e) {
 });
 
 window.addLocation = function(coordinates) {
-  if (selectedPoints.length < 5) {
-    selectedPoints.push(coordinates);
-    new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
-  } else {
-    alert("You can select up to 5 locations.");
+    // Check if coordinates are in object format and convert them to array format
+    if (typeof coordinates === 'object' && coordinates.hasOwnProperty('lng') && coordinates.hasOwnProperty('lat')) {
+      coordinates = [coordinates.lng, coordinates.lat];
+    }
+  
+    if (selectedPoints.length < 5) {
+      selectedPoints.push(coordinates);
+      new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
+      console.log(selectedPoints); // Log after adding a new point
+    } else {
+      alert("You can select up to 5 locations.");
+    }
   }
-}
 
 // Create search bar
 // Add geocoder control to the map
-map.addControl(
-    new MapboxGeocoder({
+const geocoder = new MapboxGeocoder({ // Create a Geocoder control
     accessToken: mapboxgl.accessToken,
     mapboxgl: mapboxgl
-    })
-    );
+});
+
+map.addControl(geocoder); // Add Geocoder control to the map
+
+// Listen for the 'result' event on the Geocoder
+geocoder.on('result', function(e) {
+    const coordinates = e.result.geometry.coordinates;
+    
+    // Create a Popup with a button for adding the location
+    const popupHTML = "<button onclick='addLocation(" + JSON.stringify(coordinates) + ")'>Add this location</button>";
+    new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(popupHTML)
+        .addTo(map);
+});
+
+window.addLocation = function(coordinates) {
+    // Check if coordinates are in object format and convert them to array format
+    if (typeof coordinates === 'object' && coordinates.hasOwnProperty('lng') && coordinates.hasOwnProperty('lat')) {
+      coordinates = [coordinates.lng, coordinates.lat];
+    }
+  
+    if (selectedPoints.length < 5) {
+      selectedPoints.push(coordinates);
+      new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
+      console.log(selectedPoints); // Log after adding a new point
+    } else {
+      alert("You can select up to 5 locations.");
+    }
+  }
