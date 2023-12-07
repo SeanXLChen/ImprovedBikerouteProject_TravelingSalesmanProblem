@@ -1,4 +1,7 @@
 # Husky Planner
+![Static Badge](https://img.shields.io/badge/CS-5800-blue)
+![Static Badge](https://img.shields.io/badge/design_using-JavaScript-green?logo=JavaScript)
+![Static Badge](https://img.shields.io/badge/Design_Using-VScode-purple?logo=visualstudiocode)
 
 ## Introduction
 Husky Planner is an application inspired by the functionality of travel itinerary apps like Wanderlog, designed to help users plan their visits to multiple locations efficiently. Developed with the support and suggestions from Professor Ryan Rad, this project builds upon the concepts from Edmond's previous project, focusing on solving the Traveling Salesman Problem (TSP) – an NP-hard problem in combinatorial optimization using Help-Karp DP approach.
