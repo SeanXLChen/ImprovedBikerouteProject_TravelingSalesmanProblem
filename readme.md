@@ -11,10 +11,13 @@ Husky Planner is an application inspired by the functionality of travel itinerar
 
 ## Usage
 1. **Setting Up**: Clone the repository and navigate to the project directory.
-2. **Configuration**: In `config.js`, replace the placeholder text with your own Mapbox API key to enable the Mapbox services.
-3. **Running the App**: Open the `index.html` file in a web browser to start using the app.
-4. **Adding Destinations**: Use the search bar or click on the map to select the destinations you want to visit.
-5. **Generating the Route**: Once you have selected your destinations, click the 'Calculate Route' button to view the optimized path.
+2. **Go to Folder**: Go to `./mapbox_version`
+3. **Configuration**: In `config.js`, replace the placeholder text with your own Mapbox API key to enable the Mapbox services.
+4. **Running the App**: Open the `index.html` file in a web browser to start using the app.
+5. **Adding Destinations**: Use the search bar or click on the map to select the destinations you want to visit.
+6. **Choose Traveling Method**: Use the select box to choose which traveling method(Cycling/Walking/Driving) you will be using, default is cycling.
+7. **Generating the Route**: Once you have selected your destinations, click the 'Calculate Route' button to view the optimized path. **light blue indicating start, dark blue indicating end!!!**
+![Screenshot of huskyapp running](./app_screenshot.png)
 
 ## Local Development
 For local development, make sure you have the following installed:
@@ -22,7 +25,7 @@ For local development, make sure you have the following installed:
 - A text editor or IDE of your choice.
 
 ## Developers & Credits
-This application was developed as a collaborative effort by Group10 (@SeanXLChen @Pavinc @phantom23333) with insights from Professor Ryan Rad and is based on the creative work initiated by Edmond.
+This application was developed as a collaborative effort by Group10 (Xiaolai Chen@SeanXLChen Pavan Kumar Reddy Sajjala@Pavinc and Yu Ji@phantom23333) with insights from Professor Ryan Rad.
 
 ## Note
 Husky Planner is a tool for educational and demonstration purposes and uses the Mapbox API under its terms of service.
