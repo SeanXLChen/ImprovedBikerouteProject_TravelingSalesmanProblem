@@ -1,1 +1,1 @@
-export let mapboxAccessToken = 'Your API Key Here';
+export let mapboxAccessToken = 'pk.eyJ1IjoiY2hlbnhpYW9sYWkiLCJhIjoiY2xwc3ZoNnh1MDZyaTJpb2c1cTExc3N1ZyJ9.NYQKgTzBJCwWF5nVfAwBwA';
