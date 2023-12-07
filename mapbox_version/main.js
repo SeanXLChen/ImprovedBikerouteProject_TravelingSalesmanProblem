@@ -64,6 +64,16 @@ class CalculateRouteControl {
         this.map = map;
         this.container = document.createElement('div');
         this.container.className = 'mapboxgl-ctrl';
+        // Create the select dropdown for transportation mode
+        const modeSelect = document.createElement('select');
+        modeSelect.id = 'mode-of-transport';
+        ['cycling', 'walking', 'driving'].forEach(mode => {
+            let option = document.createElement('option');
+            option.value = mode;
+            option.textContent = mode.charAt(0).toUpperCase() + mode.slice(1); // Capitalize the first letter
+            modeSelect.appendChild(option);
+        });
+        // Add the button to the container
         const button = document.createElement('button');
         button.textContent = 'Calculate Route';
 
@@ -72,21 +82,35 @@ class CalculateRouteControl {
                 alert("Please select at least 2 locations.");
                 return;
             }
-            
-            // Add the starting point (NEU Campus) to the end of the points to form a loop
-            selectedPoints.push(selectedPoints[0]);
-            let coordinatesString = selectedPoints.map(coord => coord.join(',')).join(';');
-            let profile = 'mapbox/cycling'; // This is your profile for routing
+
+            // Create a copy of selectedPoints for route calculation
+            let routePoints = selectedPoints.slice();
+                // Check if the starting point is already the last point in the array
+    if (routePoints[routePoints.length - 1] !== routePoints[0]) {
+        // Add the starting point to the routePoints array to close the loop
+        routePoints.push(selectedPoints[0]);
+    }
+
+            let coordinatesString = routePoints.map(coord => coord.join(',')).join(';');
+            // Use the selected mode in the profile for the API request
+            let modeOfTransport = document.getElementById('mode-of-transport').value;
+            let profile = `mapbox/${modeOfTransport}`; // Use the selected mode here
+            console.log('Profile:', profile);
             let mapboxApiUrl = `https://api.mapbox.com/directions-matrix/v1/${profile}/${coordinatesString}?access_token=${mapboxAccessToken}&annotations=duration,distance`;
 
             try {
                 const response = await fetch(mapboxApiUrl);
                 const data = await response.json();
                 if (data.code === 'Ok') {
-                    console.log('Matrix API response:', data);
                     const tspPath = heldKarpWithPath(data.distances);
-                    await drawFullRoute(tspPath.path, selectedPoints);
-                    fitMapToBounds(fullRoute);
+                    console.log('Matrix API response:', data);
+                    // Check that the tspPath.path indices are all valid for the routePoints array
+                    if (tspPath.path.every(index => index < routePoints.length)) {
+                        await drawFullRoute(tspPath.path, routePoints, profile);
+                        fitMapToBounds(fullRoute);
+                    } else {
+                        console.error('Error: Invalid path indices', tspPath.path);
+                    }
                 } else {
                     console.error('Error fetching Matrix API:', data.code, data.message);
                 }
@@ -95,6 +119,8 @@ class CalculateRouteControl {
             }
         });
 
+        // Append the select dropdown and button to the container
+        this.container.appendChild(modeSelect);
         this.container.appendChild(button);
         return this.container;
     }
@@ -165,13 +191,18 @@ function heldKarpWithPath(distances) {
 
 // Define a function to make an API call for the directions between two points
 function getDirections(start, end, profile = 'mapbox/cycling') {
+    // Make sure the profile includes the 'mapbox/' prefix
+    const profilePrefix = 'mapbox/';
+    if (!profile.startsWith(profilePrefix)) {
+        profile = profilePrefix + profile;
+    }
     const url = `https://api.mapbox.com/directions/v5/${profile}/${start.join(',')};${end.join(',')}` +
         `?geometries=geojson&access_token=${mapboxAccessToken}`;
 
     return fetch(url).then(response => response.json());
 }
 
-async function drawFullRoute(path, locations) {
+async function drawFullRoute(path, locations, profile = 'mapbox/cycling') {
     fullRoute.geometry.coordinates = [];
 
     for (let i = 0; i < path.length - 1; i++) {
@@ -183,7 +214,7 @@ async function drawFullRoute(path, locations) {
             continue;
         }
 
-        const response = await getDirections(start, end);
+        const response = await getDirections(start, end, profile);
         if (response.routes && response.routes.length) {
             const routeCoordinates = response.routes[0].geometry.coordinates;
             fullRoute.geometry.coordinates.push(...routeCoordinates);
