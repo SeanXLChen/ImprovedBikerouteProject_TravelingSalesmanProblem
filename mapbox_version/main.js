@@ -35,11 +35,11 @@ map.on('click', function (e) {
 });
 
 window.addLocation = function (coordinates) {
-    if (selectedPoints.length < 6) {
+    if (selectedPoints.length < 10) {
         selectedPoints.push(coordinates);
         new mapboxgl.Marker().setLngLat(coordinates).addTo(map);
     } else {
-        alert("You can select up to 6 locations.");
+        alert("Free user can only select up to 9 locations. Pay $9.99/month to select 10+ and many more!!!");
     }
 }
 
