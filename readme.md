@@ -1,7 +1,7 @@
 # Husky Planner
 
 ## Introduction
-Husky Planner is an application inspired by the functionality of travel itinerary apps like Wanderlog, designed to help users plan their visits to multiple locations efficiently. Developed with the support and suggestions from Professor Ryan Rad, this project builds upon the concepts from Edmond's previous project, focusing on solving the Traveling Salesman Problem (TSP) – an NP-hard problem in combinatorial optimization.
+Husky Planner is an application inspired by the functionality of travel itinerary apps like Wanderlog, designed to help users plan their visits to multiple locations efficiently. Developed with the support and suggestions from Professor Ryan Rad, this project builds upon the concepts from Edmond's previous project, focusing on solving the Traveling Salesman Problem (TSP) – an NP-hard problem in combinatorial optimization using Help-Karp DP approach.
 
 ## Features
 - **Mapbox API Integration**: Utilizes the Mapbox Directions Matrix API to fetch distances between multiple points and the Mapbox Directions API to draw routes on the map.
